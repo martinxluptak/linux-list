@@ -60,6 +60,10 @@ $(TESTS): %: %.o
 	$(VECHO) "  LD\t$@\n"
 	$(Q)$(CC) -o $@ $^ $(LDFLAGS)
 
+mergesort:
+	$(VECHO) " Compiling mergesort \n"
+	$(Q)$(CC) $(CFLAGS) private/merge.c -o mergesort
+
 clean:
 	$(VECHO) "  Cleaning...\n"
 	$(Q)$(RM) $(TESTS) $(TESTS_OK) $(TESTS:=.o) $(deps)

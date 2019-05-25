@@ -3,15 +3,18 @@
 
 #include <stddef.h>
 #include <stdint.h>
-
+#include <stdio.h>
+#include <stdlib.h>
 #include "list.h"
 
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
 
-struct listitem {
+typedef struct listitem {
     uint16_t i;
     struct list_head list;
-};
+} item_t;
+
+typedef struct list_head head;
 
 static inline uint8_t getnum(void)
 {
@@ -63,6 +66,53 @@ static inline void random_shuffle_array(uint16_t *operations, uint16_t len)
         operations[i] = operations[j];
         operations[j] = i;
     }
+}
+
+static inline item_t *create_random_item()
+{
+    item_t *newitem = malloc(sizeof(newitem));
+    newitem->i = get_unsigned16();
+    return newitem;
+}
+
+static inline void add_random_items(struct list_head *h, uint16_t howmany)
+{
+    while (howmany--) {
+        item_t *newitem = create_random_item();
+        list_add(&newitem->list, h);
+    }
+}
+
+static inline int compare_listitem(head *a, head *b)
+{
+    item_t *t, *u;
+    t = list_entry(a, item_t, list);
+    u = list_entry(b, item_t, list);
+    return cmpint((void *) &t->i, (void *) &u->i);
+}
+
+static inline void print_item(head *h)
+{
+    item_t *t = list_entry(h, item_t, list);
+    printf("%d", t->i);
+}
+
+static inline void print_list(head *h)
+{
+    item_t *t;
+    list_for_each_entry (t, h, list) {
+        printf("%d,", t->i);
+    }
+    printf("\n");
+}
+
+static inline void free_list(head *h)
+{
+    item_t *t;
+    list_for_each_entry (t, h, list) {
+        free(t);
+    }
+    free(h);
 }
 
 #endif /* PRIVATE_COMMON_H */
