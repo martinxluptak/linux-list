@@ -146,6 +146,18 @@ static inline void list_del(struct list_head *node)
 #endif
 }
 
+/*
+ * Remove and return the first entry in the list or NULL if the list is empty.
+ */
+static inline struct list_head *list_pop(struct list_head *head)
+{
+    struct list_head *foo = head->prev;
+    if (foo == head)
+        return NULL;
+    list_del(foo);
+    return foo;
+}
+
 /**
  * list_del_init() - Remove a list node from the list and reinitialize it
  * @node: pointer to the node

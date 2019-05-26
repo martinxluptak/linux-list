@@ -115,4 +115,15 @@ static inline void free_list(head *h)
     free(h);
 }
 
+static inline int list_size(head *h)
+{
+    int cnt = 0;
+    head *next = h->next;
+    while (next != h) {
+        next = next->next;
+        cnt++;
+    }
+    return cnt;
+}
+
 #endif /* PRIVATE_COMMON_H */
