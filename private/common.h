@@ -1,6 +1,7 @@
 #ifndef PRIVATE_COMMON_H
 #define PRIVATE_COMMON_H
 
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -124,6 +125,16 @@ static inline int list_size(head *h)
         cnt++;
     }
     return cnt;
+}
+
+static inline bool list_contains(head *h, uint16_t element)
+{
+    item_t *t;
+    list_for_each_entry (t, h, list) {
+        if (t->i == element)
+            return true;
+    }
+    return false;
 }
 
 #endif /* PRIVATE_COMMON_H */

@@ -36,7 +36,8 @@ TESTS = \
     list_splice_init \
     list_splice_tail_init \
     list_cut_position \
-    list_pop
+    list_pop \
+    list_heavyload
 
 TESTS := $(addprefix tests/,$(TESTS))
 # dependency of source files
@@ -64,6 +65,9 @@ $(TESTS): %: %.o
 mergesort:
 	$(VECHO) " Compiling mergesort \n"
 	$(Q)$(CC) $(CFLAGS) private/merge.c -o mergesort
+skiplist:
+	$(VECHO) " Compiling skiplist \n"
+	$(Q)$(CC) $(CFLAGS) private/skip.c -o skip
 
 clean:
 	$(VECHO) "  Cleaning...\n"
